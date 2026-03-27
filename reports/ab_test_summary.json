@@ -1,0 +1,31 @@
+{
+    "metrics": {
+        "churn_rate_control": 0.8660436137071651,
+        "churn_rate_test": 0.7028301886792453,
+        "lift": 0.18845866702864122
+    },
+    "statistics": {
+        "z_statistic": -7.099055375804835,
+        "p_value": 6.280623779095022e-13,
+        "confidence_intervals": {
+            "group_a": [
+                0.8396965531083409,
+                0.8923906743059893
+            ],
+            "group_b": [
+                0.6673123049502439,
+                0.7383480724082467
+            ]
+        },
+        "is_significant": true
+    },
+    "business_impact": {
+        "customers_saved": 78,
+        "estimated_financial_gain_euro": 7941736.18
+    },
+    "ml_metadata": {
+        "model": "XGBoost Classifier",
+        "targeted_customers": 1278,
+        "risk_threshold": 0.5
+    }
+}
