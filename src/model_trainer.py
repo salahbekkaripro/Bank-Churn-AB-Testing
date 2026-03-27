@@ -6,39 +6,31 @@ from sklearn.model_selection import train_test_split
 
 def train_churn_model(df):
     """
-    Prépare les données et entraîne un modèle XGBoost pour prédire le churn.
-    
-    Args:
-        df (pd.DataFrame): Dataset original.
-        
-    Returns:
-        tuple: (model, df_with_probs, feature_names)
+    Prépare les données et entraîne un modèle pour prédire le départ des clients.
     """
-    # 1. Préparation des données
-    # On travaille sur une copie pour ne pas altérer le df original
+    # On fait une copie pour ne pas modifier les données d'origine
     df_model = df.copy()
     
-    # Nettoyage (stripping) au cas où ce n'est pas déjà fait
+    # On nettoie les noms de colonnes (enlève les espaces vides)
     df_model.columns = [c.strip() for c in df_model.columns]
     
-    # Drop colonnes non pertinentes pour le ML
+    # On enlève les colonnes qui ne servent pas au modèle (ID, Nom, etc.)
     cols_to_drop = ['RowNumber', 'CustomerId', 'Surname']
     df_model = df_model.drop(columns=cols_to_drop)
     
-    # 2. Encodage des variables catégorielles
+    # Transformation des textes (Pays, Genre) en chiffres pour que l'algorithme comprenne
     le_geo = LabelEncoder()
     le_gender = LabelEncoder()
     
     df_model['Geography'] = le_geo.fit_transform(df_model['Geography'])
     df_model['Gender'] = le_gender.fit_transform(df_model['Gender'])
     
-    # 3. Séparation Features / Target
+    # Séparation des variables explicatives et de la cible (Exited)
     X = df_model.drop('Exited', axis=1)
     y = df_model['Exited']
     feature_names = X.columns.tolist()
     
-    # 4. Entraînement du modèle
-    # On utilise des hyperparamètres raisonnables par défaut
+    # Configuration de l'algorithme XGBoost avec des paramètres de base
     model = XGBClassifier(
         n_estimators=100,
         max_depth=5,
@@ -48,11 +40,10 @@ def train_churn_model(df):
         eval_metric='logloss'
     )
     
-    # On entraîne sur tout le dataset pour la simulation, 
-    # mais en situation réelle on ferait un split train/test.
+    # Entraînement sur l'ensemble des données pour la simulation
     model.fit(X, y)
     
-    # 5. Calcul des probabilités de churn pour chaque client
+    # On ajoute la probabilité de départ dans le tableau principal
     df['Churn_Probability'] = model.predict_proba(X)[:, 1]
     
     return model, df, feature_names

@@ -1,95 +1,45 @@
-# 📊 Bank Churn Analysis & A/B Testing Pipeline
+# Analyse du Churn et Simulation d'A/B Test
 
-Welcome to the **Bank Churn Analysis & A/B Testing Pipeline** project. This repository contains a production-grade Python solution designed to analyze customer behavior and simulate retention strategies for a banking portfolio.
+Ce projet a été réalisé dans le cadre d'un cours de Licence 3 (Informatique / Data Science). L'objectif est d'analyser les départs de clients dans une banque et de simuler l'impact d'une campagne de rétention via un test A/B.
 
----
+## Présentation du projet
+Le projet utilise un jeu de données de 10 000 clients bancaires. Nous cherchons à :
+1. Identifier les clients les plus susceptibles de partir (Churn).
+2. Simuler une offre promotionnelle sur un groupe de test.
+3. Valider statistiquement si l'offre permet de réduire significativement le taux de départ.
 
-## 💼 Business Overview
+## Résultats de l'analyse
+D'après nos simulations, une réduction de 15% du churn dans le groupe de test permet de :
+- Sauver environ 150 clients sur un cycle.
+- Réduire le taux de départ de manière significative (validation par un test de proportion).
+- Identifier les facteurs principaux du départ : le nombre de produits possédés par le client et son niveau d'activité.
 
-In this project, we simulated a retention campaign (via targeted promotional offers) on a 50/50 test split of 10,000 customers.
+## Structure du dossier
+- `data/` : Contient le fichier CSV des clients.
+- `src/` : Code source pour le modèle et les calculs statistiques.
+- `reports/` : Résultats générés au format JSON et graphiques.
+- `main.py` : Script principal pour lancer l'analyse.
+- `app.py` : Dashboard pour visualiser les résultats.
 
-### 💰 Key Impact Findings
-Based on our simulation, reducing the churn rate by **15%** in the test group results in:
-- **~154 high-value customers saved** per test cycle.
-- An estimated **€15.36M in managed salary value** retained annually.
-- A **Lift of 12.93%** compared to the control group.
+## Installation et lancement
 
-This project demonstrates how data-driven decisions can directly translate into massive financial gains for financial institutions.
-
----
-
-## 📂 Project Structure
-
-```text
-.
-├── data/                    # Dataset storage (CSV files)
-│   └── Churn_Modelling.csv  # 10,000 rows of customer data
-├── reports/                 # JSON automated reports
-│   └── ab_test_summary.json # Final A/B test results
-├── src/                     # Core logic (Source code)
-│   └── stats_utils.py       # Z-test & financial valuation logic
-├── main.py                  # Pipeline orchestrator
-├── app.py                   # Streamlit interactive dashboard
-├── requirements.txt         # Project dependencies
-└── README.md                # Documentation (you are here!)
-```
-
----
-
-## 🛠️ Methodology & ML Intelligence
-
-We combine statistical rigor with predictive modeling to maximize retention ROI:
-
-1.  **Risk Identification (XGBoost)**: A Gradient Boosting model identifies high-risk customers based on behavioral patterns.
-2.  **Targeted A/B Test**: We focus the retention campaign on customers with a **churn probability > 50%**, ensuring resources are spent where they matter most.
-3.  **Simulation**: Randomized intervention on the high-risk group reducing churn by 15%.
-
-### 🧠 Model Interpretability (Key Drivers)
-Analysis of the XGBoost model reveals that churn is driven by **customer engagement** rather than wealth:
-*   **Product Density**: `NumOfProducts` is the top predictor. Single-product customers are at the highest risk.
-*   **Activity Status**: `IsActiveMember` is a critical threshold; inactive members represent the primary churn reservoir.
-*   **Demographics**: `Age` is a more significant churn signal than account `Balance`.
-
----
-
-## 💡 Strategic Recommendations
-
-Based on our data-driven findings, we recommend the following actions:
-
-*   **⚡ Boost Engagement**: Implement a "Next-Best-Product" campaign for single-product holders to increase switching costs and loyalty.
-*   **🔄 Reactivation Program**: Design specific reactivation offers for inactive members, as they are the most responsive to promotional interventions.
-*   **🎓 Age-Specific Retention**: Tailor digital banking features and loyalty rewards for middle-aged segments, where churn sensitivity is highest.
-
----
-
-## 🚀 Quick Start
-
-Follow these steps to reproduce the analysis:
-
-### 1. Install Dependencies
-Ensure you have Python 3.8+ installed.
+### 1. Installation des bibliothèques
+Il est nécessaire d'installer les dépendances suivantes :
 ```bash
-pip install -r requirements.txt
+pip install pandas numpy xgboost scikit-learn matplotlib seaborn statsmodels streamlit plotly
 ```
 
-### 2. Run the Pipeline
-Execute the data processing and statistical analysis:
+### 2. Lancer l'analyse
+Pour calculer les résultats et générer le rapport :
 ```bash
 python main.py
 ```
-*This will update the `reports/ab_test_summary.json` file.*
 
-### 3. Launch the Dashboard
-View results and interact with the financial simulator:
+### 3. Voir le dashboard
+Pour lancer l'interface de visualisation :
 ```bash
 streamlit run app.py
 ```
 
 ---
-
-## 🔐 Security & License
-- **License**: MIT
-- **Contact**: Technical Lead - Data Science Team
-
----
-*Generated by Gemini CLI - 2026*
+Projet universitaire - 2026
